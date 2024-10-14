@@ -1,0 +1,168 @@
+# project_config.yaml
+
+# Database Configuration
+database:
+  uri: "data/sample-lancedb"
+  table_name: "items"
+
+# Agent Configurations
+agents:
+  communicating_agent:
+    name: "Agent A"
+    type: "CommunicatingAgent"
+    instructions: "You are a helpful agent interfacing with Ollama."
+    model: "llama3.1"
+    api_key_env: "OLLAMA_API_KEY"
+    endpoint_env: "OLLAMA_ENDPOINT"
+
+  decision_maker:
+    name: "Agent B"
+    type: "DecisionMaker"
+    instructions: "Only speak in Haikus."
+    model: "llama3.1"
+    grid_size: [5, 5]
+    num_actions: 4
+    learning_rate: 0.001
+
+# AlphaZero Configuration
+alphazero:
+  grid_size: [5, 5]
+  num_actions: 4
+  learning_rate: 0.001
+  num_simulations: 50
+  episodes: 100
+  model_save_path: "alphazero_gridworld.pth"
+
+# Character Configuration
+character:
+  dataclass:
+    - name: str
+    - age: int
+    - occupation: str
+    - status: str
+    - level: str
+    - points: int
+    - stats: Stats
+    - inventory: List[InventoryItem]
+    - location: Location
+    - health: Health
+    - equipment: Equipment
+    - quests: Quests
+    - friends: List[Relationship]
+    - enemies: List[Relationship]
+    - goals: Goals
+    - backstory: str
+    - personality: Personality
+    - preferences: Preferences
+
+  sub_classes:
+    Stats:
+      - strength: int
+      - intelligence: int
+      - charisma: int
+      - luck: int
+
+    InventoryItem:
+      - name: str
+      - quantity: int
+
+    Location:
+      - latitude: float
+      - longitude: float
+
+    Health:
+      - current: int
+      - max: int
+
+    Equipment:
+      - weapon: str
+      - armor: str
+      - accessory: str
+
+    Quests:
+      - completed: List[str]
+      - active: List[str]
+
+    Relationship:
+      - name: str
+      - type: str
+
+    Goals:
+      - short: str
+      - long: str
+
+    Personality:
+      - traits: List[str]
+      - hobbies: List[str]
+
+    Preferences:
+      - color: str
+      - food: str
+      - activity: str
+
+# Memory Configuration
+memory:
+  default_character_name: "John Doe"
+
+# Swarm Configuration
+swarm:
+  client_class: "SwarmClient"
+
+# Environment Configuration
+environment:
+  type: "GridWorld"
+  size: [5, 5]
+
+# Neural Network Configuration
+neural_network:
+  type: "AlphaZeroNetwork"
+  conv_layers:
+    - filters: 64
+      kernel_size: 3
+    - filters: 128
+      kernel_size: 3
+  fc_units: 256
+
+# MCTS Configuration
+mcts:
+  num_simulations: 50
+
+# Transfer Function Configuration
+transfer_function:
+  model: "llama3.1"
+
+# Imports
+imports:
+  - from swarm import Swarm
+  - from agents.comm_agent.agent import CommunicatingAgent
+  - from agents.alphazero_agent.agent import DecisionMaker
+  - from memory import Memory
+  - import os
+  - from dotenv import load_dotenv
+  - import numpy as np
+  - import torch
+  - import torch.optim as optim
+  - from typing import List, Tuple
+  - from dataclasses import dataclass
+
+# File Paths
+file_paths:
+  bot: "bot.py"
+  communicating_agent: "agents/comm_agent/agent.py"
+  decision_maker: "agents/alphazero_agent/agent.py"
+  alphazero: "agents/alphazero_agent/decision/alpha_zero.py"
+  gridworld: "agents/alphazero_agent/decision/environment/gridworld.py"
+  neural_network: "agents/alphazero_agent/decision/models/network.py"
+  transfer_function: "helpers/transfer_function.py"
+  memory: "memory.py"
+  character: "character.py"
+
+# Requirements
+requirements:
+  - git+https://github.com/openai/swarm.git
+  - ollama
+  - lancedb
+  - PyYAML
+  - torch
+  - numpy
+  - python-dotenv
